@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Painel | Clínica Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <h1>Clínica Vida</h1>
+        <span>Olá, {{ session['usuario_nome'] }}!</span>
+    </header>
+
+    <nav class="menu">
+        <a href="{{ url_for('painel') }}">Início</a>
+        <a href="{{ url_for('usuarios') }}">Usuários</a>
+        <a href="{{ url_for('medicos') }}">Médicos</a>
+        <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+        <a href="{{ url_for('sair') }}">Sair</a>
+    </nav>
+
+    <main class="conteudo">
+        <h2>Painel principal</h2>
+        <p>Bem-vindo ao sistema de gerenciamento da Clínica Vida.</p>
+
+        <div class="cards">
+            <a class="card" href="{{ url_for('usuarios') }}">
+                <h3>Usuários</h3>
+                <p>Cadastrar, consultar, editar e excluir usuários.</p>
+            </a>
+
+            <div class="card">
+                <h3>Médicos</h3>
+                <p>Área destinada ao gerenciamento de médicos.</p>
+            </div>
+
+            <div class="card">
+                <h3>Agendamentos</h3>
+                <p>Área destinada às consultas agendadas.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

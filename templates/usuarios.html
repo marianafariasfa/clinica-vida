@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Usuários | Clínica Vida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topo">
+        <h1>Clínica Vida</h1>
+        <a href="{{ url_for('painel') }}">Voltar ao painel</a>
+    </header>
+
+    <main class="conteudo">
+        <h2>Gerenciamento de usuários</h2>
+
+        {% for categoria, mensagem in get_flashed_messages(with_categories=true) %}
+            <div class="mensagem {{ categoria }}">{{ mensagem }}</div>
+        {% endfor %}
+
+        <section class="formulario">
+            <h3>{{ 'Editar usuário' if editando|default(false) else 'Cadastrar usuário' }}</h3>
+
+            <form method="POST"
+                  action="{{ url_for('editar_usuario', id=usuarios[0]['id_usuario']) if editando|default(false) else url_for('usuarios') }}">
+
+                <label for="nome">Nome</label>
+                <input id="nome" name="nome" required
+                       value="{{ usuarios[0]['nome'] if editando|default(false) else '' }}">
+
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" required
+                       value="{{ usuarios[0]['email'] if editando|default(false) else '' }}">
+
+                <label for="senha">Senha {% if editando|default(false) %}(deixe em branco para manter){% endif %}</label>
+                <input id="senha" name="senha"
+                       type="password" {% if not editando|default(false) %}required{% endif %}>
+
+                <button type="submit">{{ 'Salvar alterações' if editando|default(false) else 'Cadastrar' }}</button>
+                {% if editando|default(false) %}
+                    <a href="{{ url_for('usuarios') }}">Cancelar</a>
+                {% endif %}
+            </form>
+        </section>
+
+        <h3>Usuários cadastrados</h3>
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario['id_usuario'] }}</td>
+                        <td>{{ usuario['nome'] }}</td>
+                        <td>{{ usuario['email'] }}</td>
+                        <td>{{ usuario['tipo_usuario'] }}</td>
+                        <td class="acoes">
+                            <a href="{{ url_for('editar_usuario', id=usuario['id_usuario']) }}">Editar</a>
+
+                            <form method="POST"
+                                  action="{{ url_for('excluir_usuario', id=usuario['id_usuario']) }}"
+                                  onsubmit="return confirm('Deseja realmente excluir este usuário?');">
+                                <button type="submit" class="botao-excluir">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhum usuário cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

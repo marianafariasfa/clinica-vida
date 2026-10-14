@@ -1,0 +1,542 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243247;
+}
+
+.login-body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #e5efff, #f7f9fc);
+}
+
+.login-card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px #1b37651a;
+}
+
+.login-card h1 {
+    color: #1556a8;
+    text-align: center;
+}
+
+.login-card p,
+.login-card small {
+    color: #68778b;
+    text-align: center;
+    display: block;
+}
+
+form label {
+    display: block;
+    margin: 16px 0 6px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+button {
+    background: #1765bd;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.login-card button {
+    width: 100%;
+    margin-top: 22px;
+}
+
+button:hover {
+    background: #104d91;
+}
+
+.topo {
+    background: #1556a8;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.topo h1 {
+    margin: 0;
+}
+
+.topo a {
+    color: white;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 12px 5%;
+    background: #fff;
+    box-shadow: 0 2px 5px #0000000d;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #24415f;
+    padding: 12px 16px;
+    border-radius: 6px;
+}
+
+.menu a:hover {
+    background: #e5efff;
+    color: #1556a8;
+}
+
+.conteudo {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.card,
+.formulario {
+    display: block;
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px #0000000a;
+    text-decoration: none;
+    color: inherit;
+}
+
+.card h3 {
+    color: #1556a8;
+}
+
+.formulario {
+    margin: 20px 0 30px;
+}
+
+.formulario button {
+    margin-top: 18px;
+}
+
+.tabela-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #e5efff;
+    color: #174d8a;
+}
+
+.acoes {
+    white-space: nowrap;
+}
+
+.acoes form {
+    display: inline;
+}
+
+.acoes a {
+    margin-right: 8px;
+}
+
+.botao-excluir {
+    background: #c0392b;
+    padding: 8px 10px;
+}
+
+.mensagem {
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.sucesso {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.erro {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.heading {
+    margin-bottom: 24px;
+}
+
+.heading h1 {
+    color: #1556a8;
+    font-size: 28px;
+    margin: 0 0 8px;
+}
+
+.heading p {
+    color: #68778b;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Formulários e cartões */
+
+.card h2 {
+    color: #1556a8;
+    font-size: 18px;
+    margin: 0 0 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px 20px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #243247;
+    background: white;
+}
+
+.field textarea {
+    min-height: 78px;
+    resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: 2px solid #bfdbfe;
+    border-color: #1556a8;
+}
+
+.wide {
+    grid-column: 1 / -1;
+}
+
+/* Botões */
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 21px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 7px;
+    padding: 11px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.primary {
+    background: #1765bd;
+    color: white;
+}
+
+.primary:hover {
+    background: #104d91;
+}
+
+.secondary {
+    background: #e5efff;
+    color: #1556a8;
+}
+
+.edit {
+    background: #e5efff;
+    color: #1556a8;
+    padding: 8px 10px;
+}
+
+.cancel {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 8px 10px;
+}
+
+.cancel:hover,
+.botao-excluir:hover {
+    background: #c0392b;
+    color: white;
+}
+
+/* Mensagens e tabela */
+
+.notice {
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 6px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 14px;
+}
+
+.notice.erro {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+}
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.card th {
+    background: #e5efff;
+    color: #174d8a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.card th,
+.card td {
+    padding: 13px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.card tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.muted {
+    color: #68778b;
+    font-size: 12px;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.row-actions form {
+    display: inline;
+}
+
+.empty {
+    text-align: center;
+    color: #68778b;
+    padding: 28px;
+}
+
+footer {
+    text-align: center;
+    color: #8491a0;
+    font-size: 12px;
+    padding: 4px 0 25px;
+}
+
+.heading {
+    margin-bottom: 24px;
+}
+
+.heading h1 {
+    color: #1556a8;
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.heading p {
+    color: #68778b;
+    font-size: 14px;
+}
+
+.campos-agendamento {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+.campo-agendamento label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 8px;
+}
+
+.campo-agendamento input,
+.campo-agendamento select,
+.campo-agendamento textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: white;
+    color: #243247;
+}
+
+.campo-agendamento textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+.campo-agendamento input:focus,
+.campo-agendamento select:focus,
+.campo-agendamento textarea:focus {
+    outline: 2px solid #b8d5f5;
+    border-color: #1556a8;
+}
+
+.campo-largo {
+    grid-column: 1 / -1;
+}
+
+.acoes-formulario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.acoes-formulario button {
+    margin: 0;
+}
+
+.botao-secundario,
+.botao-editar {
+    display: inline-block;
+    padding: 9px 12px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    background: #e5efff;
+    color: #1556a8;
+}
+
+.acoes form {
+    display: inline;
+}
+
+.acoes button {
+    font-size: 13px;
+}
+
+.contador {
+    color: #68778b;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.rodape-agendamentos {
+    text-align: center;
+    color: #68778b;
+    font-size: 12px;
+    margin: 22px 0;
+}
+
+@media (max-width: 680px) {
+    .campos-agendamento {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-largo {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 680px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wide {
+        grid-column: auto;
+    }
+
+    .conteudo {
+        margin-top: 24px;
+        padding: 0 14px;
+    }
+
+    .formulario,
+    .card {
+        padding: 18px;
+    }
+
+    .row-actions {
+        flex-wrap: wrap;
+    }
+}

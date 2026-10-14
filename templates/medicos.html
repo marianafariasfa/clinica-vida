@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Médicos | Clínica Vida</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <h1>Clínica Vida</h1>
+    <a href="{{ url_for('painel') }}">Voltar ao painel</a>
+  </header>
+  <nav class="menu">
+    <a href="{{ url_for('painel') }}">Início</a>
+    <a href="{{ url_for('usuarios') }}">Usuários</a>
+    <a class="ativo" href="{{ url_for('medicos') }}">Médicos</a>
+    <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+    <a href="{{ url_for('sair') }}">Sair</a>
+  </nav>
+  <main class="conteudo">
+    <h2>Gerenciamento de médicos</h2>
+    {% for categoria, mensagem in get_flashed_messages(with_categories=true) %}
+      <div class="mensagem {{ categoria }}">{{ mensagem }}</div>
+    {% endfor %}
+    <section class="formulario">
+      <h3>{{ 'Editar médico' if medico_edicao else 'Cadastrar médico' }}</h3>
+      <form method="POST" action="{{ url_for('editar_medico', id=medico_edicao['id_medico']) if medico_edicao else url_for('medicos') }}">
+        <div class="campos-grid">
+          <div>
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" required maxlength="120" value="{{ medico_edicao['nome'] if medico_edicao else '' }}" placeholder="Nome completo">
+          </div>
+          <div>
+            <label for="crm">CRM</label>
+            <input id="crm" name="crm" required maxlength="30" value="{{ medico_edicao['crm'] if medico_edicao else '' }}" placeholder="Ex.: CRM-SP 123456">
+          </div>
+          <div>
+            <label for="especialidade">Especialidade</label>
+            <input id="especialidade" name="especialidade" required maxlength="100" value="{{ medico_edicao['especialidade'] if medico_edicao else '' }}" placeholder="Ex.: Cardiologia">
+          </div>
+          <div>
+            <label for="telefone">Telefone</label>
+            <input id="telefone" name="telefone" maxlength="30" value="{{ medico_edicao['telefone'] if medico_edicao else '' }}" placeholder="(11) 99999-9999">
+          </div>
+        </div>
+        <div class="form-acoes">
+          <button type="submit">{{ 'Salvar alterações' if medico_edicao else 'Cadastrar' }}</button>
+          {% if medico_edicao %}<a class="link-cancelar" href="{{ url_for('medicos') }}">Cancelar</a>{% endif %}
+        </div>
+      </form>
+    </section>
+    <section class="lista-medicos">
+      <h3>Médicos cadastrados</h3>
+      <div class="tabela-container">
+        <table>
+          <thead><tr><th>Nome</th><th>CRM</th><th>Especialidade</th><th>Telefone</th><th>Ações</th></tr></thead>
+          <tbody>
+          {% for medico in medicos %}
+            <tr>
+              <td>{{ medico['nome'] }}</td><td>{{ medico['crm'] }}</td><td>{{ medico['especialidade'] }}</td><td>{{ medico['telefone'] or '—' }}</td>
+              <td class="acoes">
+                <a href="{{ url_for('editar_medico', id=medico['id_medico']) }}">Editar</a>
+                <form method="POST" action="{{ url_for('excluir_medico', id=medico['id_medico']) }}" onsubmit="return confirm('Deseja realmente excluir este médico?');">
+                  <button type="submit" class="botao-excluir">Excluir</button>
+                </form>
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5">Nenhum médico cadastrado.</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agendamentos | Clínica Vida</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topo">
+    <h1>Clínica Vida</h1>
+    <a href="{{ url_for('painel') }}">Voltar ao painel</a>
+</header>
+
+<nav class="menu">
+    <a href="{{ url_for('painel') }}">Início</a>
+    <a href="{{ url_for('pacientes') }}">Pacientes</a>
+    <a href="{{ url_for('medicos') }}">Médicos</a>
+    <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+</nav>
+
+<main class="conteudo">
+
+    <section class="heading">
+        <h1>Gerenciar agendamentos</h1>
+        <p>Cadastre e organize as consultas da Clínica Vida.</p>
+    </section>
+
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="formulario" id="formulario">
+
+        <h2>
+            {{ 'Editar agendamento' if agendamento_edicao else 'Agendar consulta' }}
+        </h2>
+
+        <form method="POST"
+              action="{{ url_for('editar_agendamento', id=agendamento_edicao.id_agendamento) if agendamento_edicao else url_for('agendamentos') }}">
+
+            <div class="grid">
+
+                <div class="field">
+                    <label for="paciente_id">Paciente *</label>
+
+                    <select id="paciente_id" name="paciente_id" required>
+                        <option value="">Selecione um paciente</option>
+
+                        {% for paciente in pacientes %}
+                            <option value="{{ paciente.id_paciente }}"
+                                {% if agendamento_edicao and agendamento_edicao.paciente_id == paciente.id_paciente %}
+                                    selected
+                                {% endif %}>
+                                {{ paciente.nome }} — {{ paciente.cpf }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="medico_id">Médico *</label>
+
+                    <select id="medico_id" name="medico_id" required>
+                        <option value="">Selecione um médico</option>
+
+                        {% for medico in medicos %}
+                            <option value="{{ medico.id_medico }}"
+                                {% if agendamento_edicao and agendamento_edicao.medico_id == medico.id_medico %}
+                                    selected
+                                {% endif %}>
+                                {{ medico.nome }} — {{ medico.especialidade }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="data">Data *</label>
+
+                    <input
+                        type="date"
+                        id="data"
+                        name="data"
+                        value="{{ agendamento_edicao.data if agendamento_edicao else '' }}"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="horario">Horário *</label>
+
+                    <input
+                        type="time"
+                        id="horario"
+                        name="horario"
+                        value="{{ agendamento_edicao.horario if agendamento_edicao else '' }}"
+                        required
+                    >
+                </div>
+
+                <div class="field wide">
+                    <label for="descricao">Descrição</label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Motivo da consulta ou observações"
+                    >{{ agendamento_edicao.descricao if agendamento_edicao and agendamento_edicao.descricao else '' }}</textarea>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button class="btn primary" type="submit">
+                    {{ 'Salvar alterações' if agendamento_edicao else 'Agendar' }}
+                </button>
+
+                {% if agendamento_edicao %}
+                    <a class="btn secondary"
+                       href="{{ url_for('agendamentos') }}">
+                        Cancelar edição
+                    </a>
+                {% endif %}
+            </div>
+
+        </form>
+    </section>
+
+    <section class="card">
+
+        <h2>
+            Consultas agendadas
+            <span class="muted">{{ agendamentos|length }} registro(s)</span>
+        </h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Médico</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in agendamentos %}
+                        <tr>
+                            <td class="name">{{ item.paciente_nome }}</td>
+                            <td>{{ item.medico_nome }}</td>
+                            <td>{{ item.data }}</td>
+                            <td>{{ item.horario }}</td>
+                            <td>{{ item.descricao or '—' }}</td>
+
+                            <td>
+                                <div class="row-actions">
+
+                                    <a
+                                        class="btn edit"
+                                        href="{{ url_for('editar_agendamento', id=item.id_agendamento) }}">
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('cancelar_agendamento', id=item.id_agendamento) }}"
+                                        onsubmit="return confirm('Deseja cancelar este agendamento?')">
+
+                                        <button class="btn cancel" type="submit">
+                                            Cancelar
+                                        </button>
+
+                                    </form>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="empty">
+                                Nenhum agendamento cadastrado.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <footer>
+        * Campos obrigatórios. O mesmo médico não pode ter duas consultas
+        na mesma data e horário.
+    </footer>
+
+</main>
+
+</body>
+</html>
